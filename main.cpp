@@ -5,7 +5,9 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
+#include "ArbolBinarioAVL.h"
 #include "ArbolBinario.h"
+#include <ctime>
 #define U05_ARBOL_ARBOL_ARBOLBINARIO_H_
 #endif
 
@@ -487,7 +489,7 @@ int fechaNum = stringToint(fechaString);
    int fechaPos = 0;
  
  // vector<string> arr[10000];
-ArbolBinario<vector<string>> arbol;
+ArbolBinarioAVL<vector<string>> arbol;
     while (getline(fin, line))// corre todas las filas
     {
         total++;
@@ -517,6 +519,7 @@ ArbolBinario<vector<string>> arbol;
             cont++;
             }
         }
+        
     }
    
   /* quickSortTY(arr, 0, cont-1);
@@ -553,11 +556,14 @@ void casos_cui(string fileName){
     int total = -1;
     int cont =0;
    int fechaPos = 0;
- 
+
  // vector<string> arr[3000];
-ArbolBinario<vector<string>> arbol;
+//ArbolBinario<vector<string>> arbol;
+ArbolBinarioAVL<vector<string>> arbol;
+ 
     while (getline(fin, line))// corre todas las filas
     {
+       
         total++;
         row.clear();
         stringstream s(line);
@@ -577,12 +583,10 @@ ArbolBinario<vector<string>> arbol;
         
         if (row[12].compare("SI") == 0 )
         {
-        
-                 fechaPos = stringToint(row[13]);
-                    arbol.put(row);
+            arbol.put(row);
             cont++;
-
         }
+        
     }
    
   /* quickSortTY(arr, 0, cont-1);
@@ -599,6 +603,7 @@ ArbolBinario<vector<string>> arbol;
             cout << endl;
     }
          */   
+         
     arbol.inorder();
 
 cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
@@ -612,10 +617,11 @@ cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
 
 int main(int argc, char **argv)
 {
+    clock_t begin;
+    begin = clock();
+
     
-    if(!(strcmp(argv[1], "[") == 0)){
-        throw 400;
-    }
+
         if(argc == 5){
             if(strcmp(argv[2], "estad") == 0){
             estad();
@@ -639,10 +645,8 @@ int main(int argc, char **argv)
 
           else if(strcmp(argv[2], "casos_cui")==0)
         {
-               
                casos_cui(argv[4]);
-            
-
+        
         }
         
     }
@@ -674,58 +678,14 @@ int main(int argc, char **argv)
         }
         else{
             cout<< "Error en la sintaxis"<<endl;
-            return;
         }
     
 
+    clock_t end = clock ();
 
-        if(strcmp(argv[1], "[") == 0){
-        if(strcmp(argv[2], "estad") == 0){
-            estad();
-        }
-        else if(strcmp(argv[2], "p_casos") == 0){
-            if(strcmp(argv[3], "]") == 0){
-            p_casos(argv[4]);
-              
-            }
-            else{
-              p_casos(argv[3],argv[5]);
-               
-            }
-        }
-        else if(strcmp(argv[2], "p_muertes")==0)
-        {
-           
-                if(strcmp(argv[3], "]") == 0){
-           p_muertes(argv[4]);
-            }
-            else{  
-                p_muertes(argv[3],argv[5]);
-            }
-        }
-        else if(strcmp(argv[2], "casos_edad")==0)
-        {
-                if(strcmp(argv[3], "]") == 0){
-           throw 400;
-            }
-            else{
-                casos_edad(argv[3]);
-            }
-        }
+    double elapsed_secs = static_cast<double>(end - begin ) / CLOCKS_PER_SEC;
 
-          else if(strcmp(argv[2], "casos_cui")==0)
-        {
-                if(strcmp(argv[3], "]") == 0){
-                    
-               casos_cui(argv[4]);
-            }
-            else{
-            
-                casos_cui(argv[3],argv[5]);
-            }
-        }
-        
-    }
+    cout<< "Tardo elapsed_secs: "<< elapsed_secs<<"\n"<<endl;
     return 0;
 }
 
