@@ -479,6 +479,74 @@ int fechaNum = stringToint(fechaString);
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
+    vector<string> row;
+    string line, word;
+   
+    int total = -1;
+    int cont =0;
+   int fechaPos = 0;
+ 
+ // vector<string> arr[10000];
+ArbolBinario<vector<string>> arbol;
+    while (getline(fin, line))// corre todas las filas
+    {
+        total++;
+        row.clear();
+        stringstream s(line);
+        while (getline(s, word, ',')) //corre todas las columnas
+        {
+            if (word.size() > 0)
+            {
+                word = word.substr(1, word.size() - 2);
+            }
+            else
+            {
+                word = "NA";
+            }
+            row.push_back(word);
+          
+        }
+        
+        if (row[12].compare("SI") == 0 )
+        {
+            fechaPos = stringToint(row[13]);
+
+            if(fechaNum<fechaPos){
+               // arr[cont] = row;
+                  arbol.put(row);
+            cont++;
+            }
+        }
+    }
+   
+  /* quickSortTY(arr, 0, cont-1);
+
+    int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
+    int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
+    cout<<nColumns<<endl;
+
+    for(int j = 0; j < cont ; j++){
+            for (int i = 0; i < nColumns; i++)
+            {
+                cout << arr[j][colsOfInterest[i]] << "     ";
+            }
+            cout << endl;
+    }
+           */
+    arbol.inorder();
+
+cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
+
+}
+
+
+
+
+void casos_cui(string fileName){
+
+    fstream fin;
+    fin.open("./" + fileName, ios::in);
+
     vector<string> row;// opcional? (creo que no)
     string line, word;
     //int confirmed = 0;
@@ -504,24 +572,16 @@ ArbolBinario<vector<string>> arbol;
                 word = "NA";
             }
             row.push_back(word);
-           // cout<<word<<endl;
+          
         }
         
         if (row[12].compare("SI") == 0 )
         {
-        //cout<<"Hola"<<endl;
-             
+        
                  fechaPos = stringToint(row[13]);
-
-            if(fechaNum<fechaPos){
-            
-      
-                //arr[cont] = row;
                     arbol.put(row);
             cont++;
 
-
-            }
         }
     }
    
@@ -541,61 +601,10 @@ ArbolBinario<vector<string>> arbol;
          */   
     arbol.inorder();
 
-cout<<"Cantidad de casos cuidados intensivos para joaquin: "<<cont<<endl;
-//cout<<"Fecha en numero: "<<fechaNum<<endl;
-//cout<<"Fecha ingresada: "<<fecha<<endl;
+cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
 
 }
 
-
-
-
-void casos_cui(string fileName){
-
- int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
-    int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
-
-    fstream fin;
-    fin.open("./" + fileName, ios::in);
-
-    vector<string> row;// opcional? (creo que no)
-    string line, word;
-    int confirmed = 0;
-    int total = -1, cont =0;
-
-    while (getline(fin, line))// corre todas las filas
-    {
-        total++;
-        row.clear();
-        stringstream s(line);
-        while (getline(s, word, ',')) //corre todas las columnas
-        {
-            if (word.size() > 0)
-            {
-                word = word.substr(1, word.size() - 2);
-            }
-            else
-            {
-                word = "NA";
-            }
-            row.push_back(word);
-        }
-
-
-        if (row[12].compare("SI") == 0 || total==0)
-        {
-            cont++;
-            for (int i = 0; i < cont; i++)
-            {
-                cout << row[colsOfInterest[i]] << "     ";
-            }
-           
-            cout << endl;
-        }
-    }
-
-cout<<"Cantidad de casos cuidados intensivos para joaquin: "<<cont<<endl;
-}
 
 
 
@@ -603,6 +612,72 @@ cout<<"Cantidad de casos cuidados intensivos para joaquin: "<<cont<<endl;
 
 int main(int argc, char **argv)
 {
+    
+    if(!(strcmp(argv[1], "[") == 0)){
+        throw 400;
+    }
+        if(argc == 5){
+            if(strcmp(argv[2], "estad") == 0){
+            estad();
+        }
+        else if(strcmp(argv[2], "p_casos") == 0){
+            p_casos(argv[4]);
+        }
+        else if(strcmp(argv[2], "p_muertes")==0)
+        {
+           p_muertes(argv[4]);
+        }
+        else if(strcmp(argv[2], "casos_edad")==0)
+        {
+            if(strcmp(argv[3], "]") == 0){
+           throw 400;
+            }
+            else{
+                casos_edad(argv[3]);
+            }
+        }
+
+          else if(strcmp(argv[2], "casos_cui")==0)
+        {
+               
+               casos_cui(argv[4]);
+            
+
+        }
+        
+    }
+        
+        else if(argc == 6){
+
+ 
+        if(strcmp(argv[2], "p_casos") == 0){
+
+              p_casos(argv[3],argv[5]);
+               
+        }
+        else if(strcmp(argv[2], "p_muertes")==0)
+        {
+                p_muertes(argv[3],argv[5]);
+            
+        }
+        else if(strcmp(argv[2], "casos_edad")==0)
+        {
+
+                casos_edad(argv[3]);//cambiar
+            
+        }
+
+          else if(strcmp(argv[2], "casos_cui")==0)
+        {
+                casos_cui(argv[3],argv[5]);
+        }
+        }
+        else{
+            cout<< "Error en la sintaxis"<<endl;
+            return;
+        }
+    
+
 
         if(strcmp(argv[1], "[") == 0){
         if(strcmp(argv[2], "estad") == 0){
@@ -624,8 +699,7 @@ int main(int argc, char **argv)
                 if(strcmp(argv[3], "]") == 0){
            p_muertes(argv[4]);
             }
-            else{
-                
+            else{  
                 p_muertes(argv[3],argv[5]);
             }
         }
