@@ -95,11 +95,112 @@ void quickSortTYY(vector<string> arr[], int first, int last)
         quickSortTYY(arr, i, last);
 }
 
+void estad(string fileName)
+{
+
+    int totalcasos = -1;
+    int contagiados = 0;
+    int fallecidos = 0;
+    long double EdadConfirmado[11];
+    long double EdadFallecido[11];
+    float porcentajefall, porcentajecont;
+    int a = 0, b = 0;
+
+    for (int j = 0; j <= 10; j++)
+    {
+        EdadConfirmado[j] = 0;
+        EdadFallecido[j] = 0;
+    }
 
 
-void estad(){
-    cout<<endl<<"ejecutando estad.........."<<endl;
+    fstream fin;
+    fin.open("./" + fileName, ios::in);
+
+    if (fin.fail())
+    {
+        cout << "fallo";
+    }
+    vector<string> row;
+    string line, word;
+
+    while (getline(fin, line)) // corre todas las filas
+    {
+
+        row.clear();
+        stringstream s(line);
+        while (getline(s, word, ',')) //corre todas las columnas
+        {
+            if (word.size() > 0)
+            {
+                word = word.substr(1, word.size() - 2);
+            }
+            else
+            {
+                word = "NA";
+            }
+            row.push_back(word);
+        }
+        totalcasos++; //aumento constantemente el contador de los casos+
+
+        if (row[2] != "NA" && row[2] != "edad")
+        {
+            a = stoi(row[2]);
+
+            if (row[20].compare("Confirmado") == 0)
+            {
+                contagiados++;
+                if (row[3].compare("Meses") == 0)
+                {
+                    EdadConfirmado[0]++;
+                }
+                else
+                {
+                    EdadConfirmado[a / 10]++;
+                }
+            }
+            if (row[14].compare("SI") == 0)
+            {
+                fallecidos++;
+                if (row[3].compare("Meses") == 0)
+                {
+                    EdadFallecido[0]++; // 54/10 --> 5.4 pero como es int a==5
+                }
+                else
+                {
+                    EdadFallecido[a / 10]++;
+                }
+            }
+        }
+    }
+    porcentajefall = ((fallecidos * 100) / contagiados);
+    porcentajecont = ((contagiados * 100) / totalcasos);
+
+    cout << "\nCantidad total de muestras: " << totalcasos << endl;
+    cout << "\nCantidad total de contagiados: " << contagiados << endl;
+    cout << "\nCantidad total de fallecidos: " << fallecidos << endl;
+    cout << "\nPorcentaje de Contagiados: " << porcentajecont << "%" << endl;
+    cout << "\nPorcentaje de Fallecidos respecto de Contagiados: " << porcentajefall << "%" << endl;
+    cout << "\nLa cantidad de Contagiados segun rango etario:" << endl;
+    for (int i = 0; i <= 10; i++)
+    {
+        cout << "Entre " << i * 10 << " y " << (i * 10) + 9 << " anios es: " << EdadConfirmado[i] << endl;
+    }
+    cout << "\nLa cantidad de Fallecidos segun rango etario:" << endl;
+    for (int i = 0; i <= 10; i++)
+    {
+        cout << "Entre " << i * 10 << " y " << (i * 10) + 9 << " anios es: " << EdadFallecido[i] << endl;
+    }
+
+    //cantidad total de muestras //
+    //cantidad total de infectados//
+    //cantidad total de fallecidos//
+    //% de infectados por muerte //
+    //% de fallecidos por infectados//
+    //cantidad de infectados por rango etario de 10 en 10 //
+    //cantidad de muertes por rango etario de 10 en 10//
 }
+
+
 //////////////////////p_muertes///////////////////////////////////////////////////
 
 void p_muertes(string fileName)
@@ -588,7 +689,7 @@ int main(int argc, char **argv)
         if(argc == 3){
 
             if(strcmp(argv[1], "-estad") == 0){
-            estad();
+            estad(argv[2]);
         }
         else if(strcmp(argv[1], "-p_casos") == 0){
             p_casos(argv[2]);
