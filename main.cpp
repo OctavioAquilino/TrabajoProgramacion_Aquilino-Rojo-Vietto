@@ -1,11 +1,11 @@
 #ifndef U05_ARBOL_ARBOL_ARBOLBINARIO_H_
 #include <vector>
 #include <iostream>
-#include "utils.h"
 #include <fstream>
 #include <sstream>
 #include <string.h>
 #include "ArbolBinarioAVL.h"
+#include "ArbolBinarioAVLEdad.h"
 #include "ArbolBinario.h"
 #include "ArbolBinarioEdad.h"
 #include <ctime>
@@ -61,96 +61,6 @@ void quickSortTY(vector<string> arr[], int first, int last) {
     quickSortTY(arr, i, last);
 }
 
-
-
-
-void chopCSV(string fileName, int lines)
-{
-
-    string newName = fileName.substr(0, fileName.find(".csv"));
-    newName += to_string(lines) + ".csv";
-
-    fstream fin, fout;
-    fin.open("./" + fileName, ios::in);
-    fout.open("./" + newName, ios::out);
-
-    string line, word;
-    for (int i = 0; i < lines; i++)
-    {
-        getline(fin, line);
-        fout << line << "\n";
-    }
-}
-
-void exploreCSV(string fileName)
-{
-    int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
-    int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
-
-    fstream fin;
-    fin.open("./" + fileName, ios::in);
-
-    vector<string> row;// opcional? (creo que no)
-    string line, word;
-    int confirmed = 0;
-    int total = -1;
-
-    while (getline(fin, line))// corre todas las filas
-    {
-        total++;
-        row.clear();
-        stringstream s(line);
-        while (getline(s, word, ',')) //corre todas las columnas
-        {
-            if (word.size() > 0)
-            {
-                word = word.substr(1, word.size() - 2);
-            }
-            else
-            {
-                word = "NA";
-            }
-            row.push_back(word);
-        }
-
-
-        if (row[20].compare("Confirmado") == 0 || total==0)
-        {
-            for (int i = 0; i < nColumns; i++)
-            {
-                std::cout << row[colsOfInterest[i]] << " ";
-            }
-            confirmed++;
-            cout << endl;
-        }
-    }
-
-    cout << "Casos confirmados: " << confirmed << " de " << total << " casos registrados." << endl;
-}
-
-void exploreHeaders(string fileName)
-{
-    
-    fstream fin;
-    
-    fin.open("./" + fileName, ios::in);
-    
-    string headers, header;
-    getline(fin, headers);
-
-    stringstream s(headers);
-    while (getline(s, header, ','))
-    {
-        cout << header << endl;
-    }
-}
-
-
-
-void estad(){
-    cout<<endl<<"ejecutando estad.........."<<endl;
-}
-
 void quickSortTYY(vector<string> arr[], int first, int last)
 {
     
@@ -185,6 +95,11 @@ void quickSortTYY(vector<string> arr[], int first, int last)
         quickSortTYY(arr, i, last);
 }
 
+
+
+void estad(){
+    cout<<endl<<"ejecutando estad.........."<<endl;
+}
 //////////////////////p_muertes///////////////////////////////////////////////////
 
 void p_muertes(string fileName)
@@ -484,8 +399,8 @@ string edadString;
     string line, word;
  
 
-ArbolBinarioEdad<vector<string>> arbol;
-//ArbolBinario<vector<string>> arbol;
+//ArbolBinarioEdad<vector<string>> arbol;
+ArbolBinarioAVLEdad<vector<string>> arbol;
 
  int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
     int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
@@ -590,7 +505,7 @@ ArbolBinarioAVL<vector<string>> arbol;
            */
     arbol.inorder();
 
-cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
+cout<<"Cantidad de casos cuidados intensivos despues de la fecha "<<fechaString<<": "<<cont<<endl;
 }
 else
 cout<<"Problemas con el archivo"<<endl;
@@ -615,8 +530,6 @@ ArbolBinarioAVL<vector<string>> arbol;
  
     while (getline(fin, line))// corre todas las filas
     {
-       
-        
         row.clear();
         stringstream s(line);
         while (getline(s, word, ',')) //corre todas las columnas
