@@ -608,7 +608,7 @@ void casos_cui(string fileName){
     int cont =0;
    int fechaPos = 0;
 
- // vector<string> arr[3000];
+ //vector<string> arr[80000];
 //ArbolBinario<vector<string>> arbol;
 ArbolBinarioAVL<vector<string>> arbol;
  
@@ -634,14 +634,15 @@ ArbolBinarioAVL<vector<string>> arbol;
         
         if (row[12].compare("SI") == 0 )
         {
+            // arr[cont] = row;
             arbol.put(row);
             cont++;
         }
         
     }
    
-  /* quickSortTY(arr, 0, cont-1);
-
+ // quickSortTY(arr, 0, cont-1);
+/*
     int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
     int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
     cout<<nColumns<<endl;
@@ -653,7 +654,7 @@ ArbolBinarioAVL<vector<string>> arbol;
             }
             cout << endl;
     }
-         */   
+       */    
          
     arbol.inorder();
 
