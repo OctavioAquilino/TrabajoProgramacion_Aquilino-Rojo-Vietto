@@ -269,18 +269,34 @@ void p_muertes(string fileName)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout<<arr[i][j]<<"  ";
+            cout << arr[i][j] << "  ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
-void p_muertes(char *n, string fileName)
+void p_muertes(string n, string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
     cout << "Cantidad de muertes por provincia" << endl;
     cout << "////////////////////////////////////////////////////\n"
          << endl;
+
+    for (int i = 0; i < n.length(); i++)
+    {
+        if (n[i] < 48 || n[i] > 57)
+        {
+            cout << "Solo se permiten numeros enteros para la funcion\n" << endl;
+            exit(1);
+        }
+    }
+
+    int val = stoi(n);
+
+    if(val > 25 || val <= 0){
+        cout<<"Solo hay 25 posibles provincias, se cambiará a este valor\n"<<endl;
+        val=25;
+    }
 
     fstream fin;
     fin.open("./" + fileName, ios::in);
@@ -337,15 +353,13 @@ void p_muertes(char *n, string fileName)
 
     quickSortTYY(arr, 0, 24);
 
-    int val = atoi(n);
-
     for (int i = 0; i < val; i++)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout<<arr[i][j]<<"  ";
+            cout << arr[i][j] << "  ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
@@ -355,7 +369,8 @@ void p_casos(string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
     cout << "Cantidad de casos por provincia" << endl;
-    cout << "////////////////////////////////////////////////////\n"<< endl;
+    cout << "////////////////////////////////////////////////////\n"
+         << endl;
 
     fstream fin;
     fin.open("./" + fileName, ios::in);
@@ -413,18 +428,34 @@ void p_casos(string fileName)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout<<arr[i][j]<<"  ";
+            cout << arr[i][j] << "  ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
-void p_casos(char *n, string fileName)
+void p_casos(string n, string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
     cout << "Cantidad de casos por provincia" << endl;
     cout << "////////////////////////////////////////////////////\n"<< endl;
 
+    for (int i = 0; i < n.length(); i++)
+    {
+        if (n[i] < 48 || n[i] > 57)
+        {
+            cout << "Solo se permiten numeros enteros para la funcion\n" << endl;
+            exit(1);
+        }
+    }
+
+    int val = stoi(n);
+
+    if(val > 25 || val <= 0){
+        cout<<"Solo hay 25 posibles provincias, se cambiará a este valor\n"<<endl;
+        val=25;
+    }
+
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
@@ -476,18 +507,17 @@ void p_casos(char *n, string fileName)
 
     quickSortTYY(arr, 0, 24);
 
-    int val = atoi(n);
-
     for (int i = 0; i < val; i++)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout<<arr[i][j]<<"  ";
+            cout << arr[i][j] << "  ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////
 void casos_edad(string edad_,string fileName){
 cout<<endl<<"ejecutando casos_edad("<<edad_<<").........."<<endl;
 int edad = stoi(edad_);
@@ -611,8 +641,6 @@ cout<<"Cantidad de casos cuidados intensivos despues de la fecha "<<fechaString<
 else
 cout<<"Problemas con el archivo"<<endl;
 }
-
-
 
 void casos_cui(string fileName){
     fstream fin;
