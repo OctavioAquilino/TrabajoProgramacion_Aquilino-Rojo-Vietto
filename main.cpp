@@ -604,7 +604,6 @@ void casos_cui(string fileName){
     vector<string> row;// opcional? (creo que no)
     string line, word;
     //int confirmed = 0;
-    int total = -1;
     int cont =0;
    int fechaPos = 0;
 
@@ -615,7 +614,7 @@ ArbolBinarioAVL<vector<string>> arbol;
     while (getline(fin, line))// corre todas las filas
     {
        
-        total++;
+        
         row.clear();
         stringstream s(line);
         while (getline(s, word, ',')) //corre todas las columnas
