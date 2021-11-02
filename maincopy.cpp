@@ -13,8 +13,8 @@
 #endif
 
 
-using namespace std;
- 
+
+ using namespace std;
 
  int stringToint(string fechaString){
 
@@ -532,7 +532,6 @@ int fechaNum = stringToint(fechaString);
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
-if(!fin.fail()){
     vector<string> row;
     string line, word;
    
@@ -591,17 +590,16 @@ ArbolBinarioAVL<vector<string>> arbol;
     arbol.inorder();
 
 cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
+
 }
-else
-cout<<"Problemas con el archivo"<<endl;
-}
+
 
 
 
 void casos_cui(string fileName){
+
     fstream fin;
     fin.open("./" + fileName, ios::in);
-if(!fin.fail()){
 
     vector<string> row;// opcional? (creo que no)
     string line, word;
@@ -660,20 +658,22 @@ ArbolBinarioAVL<vector<string>> arbol;
     arbol.inorder();
 
 cout<<"Cantidad de casos cuidados intensivos: "<<cont<<endl;
+
 }
-else
-    cout<<"Problemas con el archivo"<<endl;
-}
+
+
+
+
 
 
 int main(int argc, char **argv)
 {
-
+    std::cout<<argc<<endl;
     clock_t begin;
     begin = clock();
-    
+        
         if(argc == 3){
-
+            cout<<"Hola"<<endl;
             if(strcmp(argv[1], "-estad") == 0){
             estad();
         }
@@ -690,18 +690,12 @@ int main(int argc, char **argv)
                casos_cui(argv[2]);
         
         }
-        else{
-            cout<<"Error en la sintaxis"<<endl;
-            cout<<"Ejemplos de uso: "<<endl;
-            cout<<"    covid19.exe -estad Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos Covid19Casos.csv"<<endl;
-        }
         
         }
         
         else if(argc == 4){
-            
+
+ 
         if(strcmp(argv[1], "-p_casos") == 0){
 
               p_casos(argv[2],argv[3]);
@@ -723,23 +717,11 @@ int main(int argc, char **argv)
         {
                 casos_cui(argv[2],argv[3]);
         }
-        else{
-            cout<< "Error en la sintaxis"<<endl;
-                   cout<<"Ejemplos de uso: "<<endl;
-            cout<<"    covid19.exe -estad Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos Covid19Casos.csv"<<endl;
-        }
         }
         else{
             cout<< "Error en la sintaxis"<<endl;
-                   cout<<"Ejemplos de uso: "<<endl;
-            cout<<"    covid19.exe -estad Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos Covid19Casos.csv"<<endl;
         }
-        
-
+    
 
     clock_t end = clock ();
 
@@ -748,3 +730,5 @@ int main(int argc, char **argv)
     cout<< "Tardo elapsed_secs: "<< elapsed_secs<<"\n"<<endl;
     return 0;
 }
+
+
