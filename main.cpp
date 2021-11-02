@@ -7,6 +7,7 @@
 #include <string.h>
 #include "ArbolBinarioAVL.h"
 #include "ArbolBinario.h"
+#include "ArbolBinarioEdad.h"
 #include <ctime>
 #define U05_ARBOL_ARBOL_ARBOLBINARIO_H_
 #endif
@@ -471,8 +472,58 @@ void p_casos(char *n, string fileName)
     }
 }
 
-void casos_edad(char * anios){
-cout<<endl<<"ejecutando casos_edad("<<anios<<").........."<<endl;
+void casos_edad(string edad_,string fileName){
+cout<<endl<<"ejecutando casos_edad("<<edad_<<").........."<<endl;
+int edad = stoi(edad_);
+int cont =0;
+string edadString;
+    fstream fin;
+    fin.open("./" + fileName, ios::in);
+
+    vector<string> row;
+    string line, word;
+ 
+
+ArbolBinarioEdad<vector<string>> arbol;
+//ArbolBinario<vector<string>> arbol;
+
+ int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
+    int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
+    
+                   
+ 
+    while (getline(fin, line))// corre todas las filas
+    {
+        row.clear();
+        stringstream s(line);
+        while (getline(s, word, ',')) //corre todas las columnas
+        {
+            if (word.size() > 0)
+            {
+                word = word.substr(1, word.size() - 2);
+            }
+            else
+            {
+                word = "NA";
+            }
+            row.push_back(word);
+          
+        }
+
+        edadString = row[2];
+        if (row[3].compare("Años") == 0){
+        if(edadString.compare("NA") != 0){
+            if(stoi(edadString) == edad){
+            arbol.put(row);
+            cont ++;
+         }
+       } 
+      }
+     }
+    arbol.inorder();
+
+std::cout<<"Cantidad de casos con "<<edad<<": " <<cont<<endl;
+
 }
 
 void casos_cui(string fechaString, string fileName){
@@ -633,15 +684,7 @@ int main(int argc, char **argv)
         {
            p_muertes(argv[4]);
         }
-        else if(strcmp(argv[2], "casos_edad")==0)
-        {
-            if(strcmp(argv[3], "]") == 0){
-           throw 400;
-            }
-            else{
-                casos_edad(argv[3]);
-            }
-        }
+       
 
           else if(strcmp(argv[2], "casos_cui")==0)
         {
@@ -667,7 +710,7 @@ int main(int argc, char **argv)
         else if(strcmp(argv[2], "casos_edad")==0)
         {
 
-                casos_edad(argv[3]);//cambiar
+                casos_edad(argv[3],argv[5]);//cambiar
             
         }
 
