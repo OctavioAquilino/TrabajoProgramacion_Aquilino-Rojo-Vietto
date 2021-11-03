@@ -101,12 +101,12 @@ void estad(string fileName)
     int totalcasos = -1;
     int contagiados = 0;
     int fallecidos = 0;
-    long double EdadConfirmado[100];
+    long double EdadConfirmado[100]; //arrays que permiten guardar la cantidad de casos segun rango etario
     long double EdadFallecido[100];
     float porcentajefall, porcentajecont;
     int a = 0, b = 0;
 
-    for (int j = 0; j <= 10; j++)
+    for (int j = 0; j <= 10; j++) //se igualan a cero las posiciones del array 
     {
         EdadConfirmado[j] = 0;
         EdadFallecido[j] = 0;
@@ -142,38 +142,39 @@ void estad(string fileName)
         }
         totalcasos++; //aumento constantemente el contador de los casos+
 
-        if (row[2] != "NA" && row[2] != "edad")
+        if (row[2] != "NA" && row[2] != "edad") //si los datosd e la columna dos no son "NA" ni "edad", entra a la funcion
         {
-            a = stoi(row[2]);
+            a = stoi(row[2]); //convierto la edad que viene como string, a variable entera int 
 
             if (row[20].compare("Confirmado") == 0)
             {
-                contagiados++;
+                contagiados++;             // se aumentan los contagiados si la comparacion del if es true
                 if (row[3].compare("Meses") == 0)
                 {
-                    EdadConfirmado[0]++;
+                    EdadConfirmado[0]++; // en la posicion 0 se guardan los casos de meses o 1 a 9 años
                 }
                 else
                 {
-                    EdadConfirmado[a / 10]++;
-                }
+                    EdadConfirmado[a / 10]++; // divido la edad obtenida en 10, para que se guarde en la posicion del valor entero
+                }                             // ejemplo: edad 54 años. 54/10=5.4 --> como es variable entera solo va a considerar el 5
+                                              //siguiendo esa logica, todas las edades entre 50 y 59 se guardaran en la posicion 5.
             }
             if (row[14].compare("SI") == 0)
             {
                 fallecidos++;
                 if (row[3].compare("Meses") == 0)
                 {
-                    EdadFallecido[0]++; // 54/10 --> 5.4 pero como es int a==5
+                    EdadFallecido[0]++; // mismo procedimiento que para contagiados, pero en el array de fallecidos
                 }
                 else
                 {
-                    EdadFallecido[a / 10]++;
+                    EdadFallecido[a / 10]++; // mismo procedimiento que para contagiados, pero en el array de fallecidos
                 }
             }
         }
     }
-    porcentajefall = ((fallecidos * 100) / contagiados);
-    porcentajecont = ((contagiados * 100) / totalcasos);
+    porcentajefall = ((fallecidos * 100) / contagiados); //se calculan los porcentajes totales
+    porcentajecont = ((contagiados * 100) / totalcasos);//se calculan los porcentajes totales
 
     cout << "\nCantidad total de muestras: " << totalcasos << endl;
     cout << "\nCantidad total de contagiados: " << contagiados << endl;
@@ -190,16 +191,9 @@ void estad(string fileName)
     {
         cout << "Entre " << i * 10 << " y " << (i * 10) + 9 << " anios es: " << EdadFallecido[i] << endl;
     }
-    //cantidad total de muestras //
-    //cantidad total de infectados//
-    //cantidad total de fallecidos//
-    //% de infectados por muerte //
-    //% de fallecidos por infectados//
-    //cantidad de infectados por rango etario de 10 en 10 //
-    //cantidad de muertes por rango etario de 10 en 10//
     }
     else{
-        cout<<"Error al abrir el archivo"<<endl;
+        cout<<"Error al abrir el archivo"<<endl; // si no entra en el if, devuelve error
     }
 }
 
