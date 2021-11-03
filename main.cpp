@@ -101,8 +101,8 @@ void estad(string fileName)
     int totalcasos = -1;
     int contagiados = 0;
     int fallecidos = 0;
-    long double EdadConfirmado[11];
-    long double EdadFallecido[11];
+    long double EdadConfirmado[100];
+    long double EdadFallecido[100];
     float porcentajefall, porcentajecont;
     int a = 0, b = 0;
 
@@ -116,10 +116,10 @@ void estad(string fileName)
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
-    if (fin.fail())
+    if (!fin.fail())
     {
-        cout << "fallo";
-    }
+        
+    
     vector<string> row;
     string line, word;
 
@@ -186,11 +186,10 @@ void estad(string fileName)
         cout << "Entre " << i * 10 << " y " << (i * 10) + 9 << " anios es: " << EdadConfirmado[i] << endl;
     }
     cout << "\nLa cantidad de Fallecidos segun rango etario:" << endl;
-    for (int i = 0; i <= 10; i++)
+    for (int i = 0; i < 11; i++)
     {
         cout << "Entre " << i * 10 << " y " << (i * 10) + 9 << " anios es: " << EdadFallecido[i] << endl;
     }
-
     //cantidad total de muestras //
     //cantidad total de infectados//
     //cantidad total de fallecidos//
@@ -198,6 +197,10 @@ void estad(string fileName)
     //% de fallecidos por infectados//
     //cantidad de infectados por rango etario de 10 en 10 //
     //cantidad de muertes por rango etario de 10 en 10//
+    }
+    else{
+        cout<<"Error al abrir el archivo"<<endl;
+    }
 }
 
 
@@ -247,7 +250,7 @@ void p_muertes(string fileName)
 
         for (int i = 0; i < 25; i++)
         {
-            if (row[5] == Provincias[i])
+            if (row[7] == Provincias[i])
             {
                 a++;
                 if (row[14] == "SI")
@@ -335,7 +338,7 @@ void p_muertes(string n, string fileName)
 
         for (int i = 0; i < 25; i++)
         {
-            if (row[5] == Provincias[i])
+            if (row[7] == Provincias[i])
             {
                 a++;
                 if (row[14] == "SI")
@@ -409,7 +412,7 @@ void p_casos(string fileName)
 
         for (int i = 0; i < 25; i++)
         {
-            if (row[5] == Provincias[i])
+            if (row[7] == Provincias[i])
             {
                 Cont_Provincias[i]++;
                 a++;
@@ -492,7 +495,7 @@ void p_casos(string n, string fileName)
 
         for (int i = 0; i < 25; i++)
         {
-            if (row[5] == Provincias[i])
+            if (row[7] == Provincias[i])
             {
                 Cont_Provincias[i]++;
                 a++;
@@ -768,17 +771,17 @@ int main(int argc, char **argv)
         else{
             cout<< "Error en la sintaxis"<<endl;
                    cout<<"Ejemplos de uso: "<<endl;
-            cout<<"    covid19.exe -estad Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos Covid19Casos.csv"<<endl;
+            cout<<"    ./covid19.exe -estad Covid19Casos.csv "<<endl;
+            cout<<"    ./covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
+            cout<<"    ./covid19.exe -p_casos Covid19Casos.csv"<<endl;
         }
         }
         else{
             cout<< "Error en la sintaxis"<<endl;
                    cout<<"Ejemplos de uso: "<<endl;
-            cout<<"    covid19.exe -estad Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
-            cout<<"    covid19.exe -p_casos Covid19Casos.csv"<<endl;
+            cout<<"    ./covid19.exe -estad Covid19Casos.csv "<<endl;
+            cout<<"    ./covid19.exe -p_casos 5 Covid19Casos.csv "<<endl;
+            cout<<"    ./covid19.exe -p_casos Covid19Casos.csv"<<endl;
         }
         
 
