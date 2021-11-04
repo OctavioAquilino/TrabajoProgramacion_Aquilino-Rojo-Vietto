@@ -25,7 +25,7 @@ int stringToint(string fechaString)
     for (int i = 0; i < n; i++)
     {
         int x = fechaString[i];
-        if (x >= 48 && x <= 57)
+        if (x >= 48 && x <= 57) //Se utiliza tabla ascii para filtrar datos
         {
             fecha_[j] = fechaString[i];
             j++;
