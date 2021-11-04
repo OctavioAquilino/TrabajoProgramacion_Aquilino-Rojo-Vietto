@@ -467,7 +467,7 @@ void casos_edad(string edad_, string fileName)
         fin.open("./" + fileName, ios::in);
 
         
-    if (!fin.fail())
+    if (!fin.fail()) //Controla si hubo algun problema con el archivo
     {
         vector<string> row; //Se almacenaran cada columna del archivo por fila en el
         string line, word;
@@ -500,10 +500,10 @@ void casos_edad(string edad_, string fileName)
             {
 
                 if (mesoanio.compare("Años") == 0)
-                { //Se controla si el caso tiene anios o meses, si es meses se ignora
+                { //Se controla si el caso tiene anios o meses
 
-                    if (stoi(edadString) == edad)
-                    {                   //Se filtra los casos con la edad ingresada
+                    if (stoi(edadString) == edad)//Se filtra los casos con la edad ingresada
+                    {                   
                         arbol.put(row); // se ingresan las lineas en el arbol
                         cont++;
                     }
@@ -554,21 +554,21 @@ void casos_cui(string fechaString, string fileName)
          << endl;
     int fechaNum;
 
-    if (fileName == "")
+    if (fileName == "") //Si se ejecuta la funcion sin enviar parametros
     {
         fileName = fechaString;
-        fechaNum = stringToint("1");
+        fechaNum = stringToint("1");//Se elige el 1 como un numero muy chico
         fechaString = "Sin Especificar";
     }
     else
     {
-        fechaNum = stringToint_control(fechaString);
+        fechaNum = stringToint_control(fechaString);//Se realiza la asignacion conun control extra
     }
 
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
-    if (!fin.fail())
+    if (!fin.fail()) //Se controla si hay problemas con el archivo
     {
         vector<string> row;
         string line, word;
@@ -577,13 +577,13 @@ void casos_cui(string fechaString, string fileName)
         int cont = 0;
         int fechaPos = 0;
 
-        ArbolBinarioAVL<vector<string>> arbol;
-        while (getline(fin, line)) // corre todas las filas
+        ArbolBinarioAVL<vector<string>> arbol; //El arbolAVL admite listas
+        while (getline(fin, line)) 
         {
             total++;
             row.clear();
             stringstream s(line);
-            while (getline(s, word, ',')) //corre todas las columnas
+            while (getline(s, word, ',')) 
             {
                 if (word.size() > 0)
                 {
@@ -596,11 +596,11 @@ void casos_cui(string fechaString, string fileName)
                 row.push_back(word);
             }
 
-            if (row[12].compare("SI") == 0)
+            if (row[12].compare("SI") == 0)//Si el caso estuvo en cuidados intensivos
             {
-                fechaPos = stringToint(row[13]);
+                fechaPos = stringToint(row[13]);//Se asigna la fecha en la que estuvo en cuidados intensivos
 
-                if (fechaNum < fechaPos)
+                if (fechaNum < fechaPos)//Se filtra para trabajar las fechas mayores a la ingresada
                 {
                     arbol.put(row);
                     cont++;
@@ -608,12 +608,12 @@ void casos_cui(string fechaString, string fileName)
             }
         }
 
-        arbol.inorder();
+        arbol.inorder();//se muestran las listas en orden
 
-    if(fechaString=="Sin Especificar"){
+    if(fechaString=="Sin Especificar"){ //cuando no se ingreso parametros
         cout << "Cantidad de casos cuidados intensivos: " << cont << endl;
     }
-    else{
+    else{//cuando tiene parametros
 cout << "Cantidad de casos cuidados intensivos despues de la fecha " << fechaString << ": " << cont << endl;
     }
     }
