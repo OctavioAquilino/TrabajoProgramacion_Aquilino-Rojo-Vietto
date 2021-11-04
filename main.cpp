@@ -4,10 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
-#include "ArbolBinarioAVL.h"
-#include "ArbolBinarioAVLEdad.h"
-#include "ArbolBinario.h"
-#include "ArbolBinarioEdad.h"
+#include "ArbolBinarioAVL.h" //Libreria utilizada en casos_cui
+#include "ArbolBinarioAVLEdad.h"//libreria utilizada en casos_edad
 #include <ctime>
 #define U05_ARBOL_ARBOL_ARBOLBINARIO_H_
 #endif
@@ -15,7 +13,11 @@
 
 using namespace std;
  
-
+/**
+ * Transforma un string a un int pero tomando en cuenta solo los caracteres que sean numericos, en este caso se usas para las fechas en casos_cui 
+ * @param fechaString variable en formato string
+ * @return variable en formato int solo con caracteres numericos
+ */
  int stringToint(string fechaString){
 
 int j=0, num = 0;
@@ -31,37 +33,14 @@ j++;
 return stoi(fecha_);
 }
 
-void quickSortTY(vector<string> arr[], int first, int last) {
-  int i, j, middle;
-  vector<string> pivot, aux;
+/**
+ * Ordena un array de listas, utilizado en p_casos y p_muertes
+ * @param arr arreglo de listas
+ * @param first la posicion que se inicia el ordenamiento
+ * @param last la posicion donde finaliza el ordenamiento
+ */
 
-  middle = (first + last) / 2;
-  pivot = arr[middle];
-  i = first;
-  j = last;
-
-  do {
-    while (stringToint(arr[i][13]) < stringToint(pivot[13]))
-      i++;
-    while (stringToint(arr[j][13]) > stringToint(pivot[13]))
-      j--;
-
-    if (i <= j) {
-      aux = arr[i];
-      arr[i]= arr[j];
-      arr[j]= aux;
-      i++;
-      j--;
-    }
-  } while (i <= j);
-
-  if (j > first)
-    quickSortTY(arr, first, j);
-  if (i < last)
-    quickSortTY(arr, i, last);
-}
-
-void quickSortTYY(vector<string> arr[], int first, int last)
+void quickSortProvincias(vector<string> arr[], int first, int last)
 {
     
     int i, j, middle;
@@ -74,9 +53,9 @@ void quickSortTYY(vector<string> arr[], int first, int last)
 
     do
     {
-        while (stoi(arr[i][1]) > stoi(pivot[1]))
+        while (stoi(arr[i][1]) > stoi(pivot[1])) // se tiene en cuenta la primera posicion de las listas que es el nombre de la provincias
             i++;
-        while (stoi(arr[j][1]) < stoi(pivot[1]))
+        while (stoi(arr[j][1]) < stoi(pivot[1])) //Se utiliza stoi para que se pueda comparar los nombres de las provincias, teniendo en cuenta la tabla ascii 
             j--;
 
         if (i <= j)
@@ -90,9 +69,9 @@ void quickSortTYY(vector<string> arr[], int first, int last)
     } while (i <= j);
 
     if (j > first)
-        quickSortTYY(arr, first, j);
+        quickSortProvincias(arr, first, j);
     if (i < last)
-        quickSortTYY(arr, i, last);
+        quickSortProvincias(arr, i, last);
 }
 
 void estad(string fileName)
@@ -198,8 +177,6 @@ void estad(string fileName)
 }
 
 
-//////////////////////p_muertes///////////////////////////////////////////////////
-
 void p_muertes(string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
@@ -260,7 +237,7 @@ void p_muertes(string fileName)
         arr[i].push_back(to_string(Cont_Provincias[i]));
     }
 
-    quickSortTYY(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24);
 
     for (int i = 0; i < 25; i++)
     {
@@ -348,7 +325,7 @@ void p_muertes(string n, string fileName)
         arr[i].push_back(to_string(Cont_Provincias[i]));
     }
 
-    quickSortTYY(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24);
 
     for (int i = 0; i < val; i++)
     {
@@ -360,7 +337,7 @@ void p_muertes(string n, string fileName)
     }
 }
 
-/////////////////////p_casos////////////////////////////////////////////////////
+
 
 void p_casos(string fileName)
 {
@@ -419,7 +396,7 @@ void p_casos(string fileName)
         arr[i].push_back(to_string(Cont_Provincias[i]));
     }
 
-    quickSortTYY(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24);
 
     for (int i = 0; i < 25; i++)
     {
@@ -502,7 +479,7 @@ void p_casos(string n, string fileName)
         arr[i].push_back(to_string(Cont_Provincias[i]));
     }
 
-    quickSortTYY(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24);
 
     for (int i = 0; i < val; i++)
     {
@@ -514,32 +491,58 @@ void p_casos(string n, string fileName)
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////
+/**
+ * Controla si el dato ingresado como string es un numero
+ * @param str string a controlar
+ * @return falso en caso de que no sea un numero, verdadero si si lo es 
+ */
+bool controlNum(string str){
+    int x;
+int n=str.size();
+for(int i = 0; i<n;i++){
+ x = str[i];
+if(x<48 || x>57){
+return false;
+}
+}
+return true;
+}
+
+
+/**
+ * Muestra los casos de una edad determinada
+ * @param edad_ La edad ingresada por el usuario en formato string
+ * @param fileName Nombre del archivo
+ */
 void casos_edad(string edad_,string fileName){
-cout<<endl<<"ejecutando casos_edad("<<edad_<<").........."<<endl;
-int edad = stoi(edad_);
-int cont =0;
-string edadString;
+cout<<endl<<"Ejecutando casos_edad("<<edad_<<").........."<<endl;
+if(controlNum(edad_ )){ // se controla que lo ingresado sean numeros, para evitar errores
+
+int edad = stoi(edad_); //Se pasa la edad a formato int 
+
+int cont =0; //contador 
+string edadString; //Variable donde se guardaran las edades de los casos, se utiliza para evitar repetir row[2]
+    string mesoanio; // Variable que guarda si es un mes o un anio
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
-    vector<string> row;
+    vector<string> row; //Se almacenaran cada columna del archivo por fila en el
     string line, word;
  
 
-//ArbolBinarioEdad<vector<string>> arbol;
-ArbolBinarioAVLEdad<vector<string>> arbol;
 
- int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
+ArbolBinarioAVLEdad<vector<string>> arbol; //Un arbol avl que admite listas como dato(para poder poner cada fila del archivo en un nodo)
+
+ int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20}; //Columnas de interes del archivo
     int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
     
                    
  
-    while (getline(fin, line))// corre todas las filas
+    while (getline(fin, line))
     {
         row.clear();
         stringstream s(line);
-        while (getline(s, word, ',')) //corre todas las columnas
+        while (getline(s, word, ',')) 
         {
             if (word.size() > 0)
             {
@@ -547,26 +550,47 @@ ArbolBinarioAVLEdad<vector<string>> arbol;
             }
             else
             {
-                word = "NA";
+                word = "NA";//Token para evitar lugares vacios
             }
-            row.push_back(word);
+            row.push_back(word); // Se ordena todos los datos de una fila en una lista
           
         }
 
-        edadString = row[2];
-        if (row[3].compare("Años") == 0){
-        if(edadString.compare("NA") != 0){
-            if(stoi(edadString) == edad){
-            arbol.put(row);
+        edadString = row[2]; //se asigna la edad de los casos para evitar repetir row[2]
+        mesoanio = row[3]; //se asigna si el valor es mes o anio para evitar repetir row[3]
+        if(controlNum(edadString)){
+            
+        if (mesoanio.compare("Años") == 0){ //Se controla si el caso tiene anios o meses, si es meses se ignora
+           
+            if(stoi(edadString) == edad){//Se filtra los casos con la edad ingresada
+            arbol.put(row);// se ingresan las lineas en el arbol
             cont ++;
-         }
-       } 
-      }
-     }
-    arbol.inorder();
+             
+             } 
+        
+        }
+        
+      else if(edad == 0){ //Si se ingreso la edad 0 se muestran los casos con meses
+            arbol.put(row); // se ingresan las lineas en el arbol
+            cont ++;
+             
+            }
+        }
+    }
+     
 
-std::cout<<"Cantidad de casos con "<<edad<<": " <<cont<<endl;
+    arbol.inorder(); //Se muestra las filas en orden tomando en cuenta el id de la provincias (Manejado en ArbolBinarioAVLEdad.h)
 
+if(edad == 0){
+    cout<<"Cantidad de casos con ninios menores a un anio: "<<cont<<endl;
+}
+else{
+cout<<"Cantidad de casos con "<<edad<<": " <<cont<<endl;
+}
+}
+else{
+    cout<<"Edad ingresada no es correcta"<<endl;
+}
 }
 
 void casos_cui(string fechaString, string fileName){
