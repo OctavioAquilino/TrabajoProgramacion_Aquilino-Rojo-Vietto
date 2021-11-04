@@ -88,7 +88,7 @@ NodoArbolAVL<T> *ArbolBinarioAVL<T>::put(T data, NodoArbolAVL<T> *r)
   }
   
 
-  if (r->getClave() >= stringToint(data[13]))
+  if (r->getClave() >= stringToint(data[13])) //Se tiene en cuenta la fecha de cuidado intensivo para acomodar, ademas de colocar las que coincidan a la izquierda.
   {
     r->setLeft(put(data, r->getLeft()));
   }
@@ -106,7 +106,7 @@ NodoArbolAVL<T> *ArbolBinarioAVL<T>::put(T data, NodoArbolAVL<T> *r)
   int balance = getBalance(r);
 
   //Quedo desbalanceado II: corresponde una rot Der
-  if (balance > 1 && stringToint(data[13]) <= r->getLeft()->getClave())
+  if (balance > 1 && stringToint(data[13]) <= r->getLeft()->getClave()) //Se agrego '<=' para que el balanceo funcione con claves iguales.  
   {
     //std::cout<<"Rotacion derecha"<<std::endl;
     return rotacionDerecha(r);

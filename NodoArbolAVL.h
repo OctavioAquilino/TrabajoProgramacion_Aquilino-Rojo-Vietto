@@ -8,17 +8,17 @@ template <class T>
 class NodoArbolAVL
 {
 private:
-  vector<string> data;
+  vector<string> data; //Se restringe el contenido del nodo a una lista.
   NodoArbolAVL *left, *right;
   int height;
-  int stringToint(string fechaString);
+  int stringToint(string fechaString); //Funcion para convertir fecha de string a int.
 
 public:
   NodoArbolAVL()
   {
     left = nullptr;
     right = nullptr;
-    height=1;
+    height = 1;
   }
 
   NodoArbolAVL(T d)
@@ -34,9 +34,13 @@ public:
     return data;
   }
 
-    int getClave()
+  /**
+  * Devuelve la fecha de cuidado intensivo.
+  * @return fecha en formato int solo con caracteres numericos
+  */
+  int getClave()
   {
-    return stringToint(data[13]);// El 13 solo funciona para casos cui
+    return stringToint(data[13]); // El 13 solo funciona para casos cui
   }
 
   void setData(T d)
@@ -63,45 +67,50 @@ public:
     this->left = l;
   }
 
-  int getHeight(){
+  int getHeight()
+  {
     return height;
   }
 
-  void setHeight(int h){
+  void setHeight(int h)
+  {
     height = h;
   }
 
-        void print(){// modificada para el proyecto
-         
+  /**
+  * Imprime la lista.
+  */
+  void print()
+  { // modificada para el proyecto
+
     int colsOfInterest[] = {0, 2, 3, 12, 13, 14, 17, 20};
     int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
-    
-          for (int i = 0; i < nColumns; i++)
-            {
-                cout << data[colsOfInterest[i]] << "     ";
-            }
-            cout << endl;
+
+    for (int i = 0; i < nColumns; i++)
+    {
+      cout << data[colsOfInterest[i]] << "     ";
     }
+    cout << endl;
+  }
 };
 
+template <class T>
+int NodoArbolAVL<T>::stringToint(string fechaString)
+{
 
-template<class T>
- int NodoArbolAVL<T>::stringToint(string fechaString){
-
-int j=0, num = 0;
-string fecha_;
-int n=fechaString.size();
-for(int i = 0; i<n;i++){
-int x = fechaString[i];
-if(x>=48 && x<=57){
-fecha_[j] = fechaString[i];
-j++;
+  int j = 0, num = 0;
+  string fecha_;
+  int n = fechaString.size();
+  for (int i = 0; i < n; i++)
+  {
+    int x = fechaString[i];
+    if (x >= 48 && x <= 57)
+    {
+      fecha_[j] = fechaString[i];
+      j++;
+    }
+  }
+  return stoi(fecha_);
 }
-}
-return stoi(fecha_);
-}
-
-
-
 
 #endif // U05_ARBOL_ARBOL_NODOARBOLAVL_H_

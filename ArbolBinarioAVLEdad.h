@@ -73,7 +73,7 @@ NodoArbolAVLEdad<T> *ArbolBinarioAVLEdad<T>::put(T data, NodoArbolAVLEdad<T> *r)
   }
   
 
-  if (r->getClave() >= stoi(data[17]))
+  if (r->getClave() >= stoi(data[17]))  //Se tiene en cuenta el id de las provincias para acomodar, ademas de colocar las que coincidan a la izquierda.
   {
     r->setLeft(put(data, r->getLeft()));
   }
@@ -106,7 +106,7 @@ NodoArbolAVLEdad<T> *ArbolBinarioAVLEdad<T>::put(T data, NodoArbolAVLEdad<T> *r)
   }
 
   //Quedo desbalanceado DD: corresponde una rot Izq
-  if (balance < -1 && stoi(data[17]) >= r->getRight()->getClave())
+  if (balance < -1 && stoi(data[17]) >= r->getRight()->getClave()) //Se agrego '<=' para que el balanceo funcione con claves iguales.
   {
     //std::cout<<"Rotacion izq"<<std::endl;
     return rotacionIzquierda(r);

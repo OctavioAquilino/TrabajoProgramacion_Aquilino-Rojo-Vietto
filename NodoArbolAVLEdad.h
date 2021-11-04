@@ -8,17 +8,16 @@ template <class T>
 class NodoArbolAVLEdad
 {
 private:
-  vector<string> data;
+  vector<string> data; //Se restringe el contenido del nodo a una lista.
   NodoArbolAVLEdad *left, *right;
   int height;
-  
 
 public:
   NodoArbolAVLEdad()
   {
     left = nullptr;
     right = nullptr;
-    height=1;
+    height = 1;
   }
 
   NodoArbolAVLEdad(T d)
@@ -34,9 +33,13 @@ public:
     return data;
   }
 
-    int getClave()
+  /**
+  * Devuelve la fecha de cuidado intensivo.
+  * @return fecha en formato int solo con caracteres numericos
+  */
+  int getClave()
   {
-    return stoi(data[17]);// El 17 solo funciona para casos edad
+    return stoi(data[17]); // El 17 solo funciona para casos edad
   }
 
   void setData(T d)
@@ -63,28 +66,31 @@ public:
     this->left = l;
   }
 
-  int getHeight(){
+  int getHeight()
+  {
     return height;
   }
 
-  void setHeight(int h){
+  void setHeight(int h)
+  {
     height = h;
   }
 
-        void print(){// modificada para el proyecto
-         
+  /**
+  * Imprime la lista.
+  */
+  void print()
+  { // modificada para el proyecto
+
     int colsOfInterest[] = {0, 2, 3, 7, 12, 13, 14, 17, 20};
     int nColumns = sizeof(colsOfInterest) / sizeof(colsOfInterest[0]);
-    
-          for (int i = 0; i < nColumns; i++)
-            {
-                cout << data[colsOfInterest[i]] << "     ";
-            }
-            cout << endl;
+
+    for (int i = 0; i < nColumns; i++)
+    {
+      cout << data[colsOfInterest[i]] << "     ";
     }
+    cout << endl;
+  }
 };
-
-
-
 
 #endif // U05_ARBOL_ARBOL_NODOARBOLAVLEdad_H_
