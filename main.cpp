@@ -9,8 +9,8 @@
 #include <ctime>
 #define U05_ARBOL_ARBOL_ARBOLBINARIO_H_
 #endif
-using namespace std;
 
+using namespace std;
 /**
  * Transforma un string a un int pero tomando en cuenta solo los caracteres que sean numericos, en este caso se usas para las fechas en casos_cui 
  * @param fechaString variable en formato string
@@ -129,7 +129,10 @@ void quickSortProvincias(vector<string> arr[], int first, int last)
  */
 void estad(string fileName)
 {
-
+   cout << "\n\n////////////////////////////////////////////////////" << endl;
+    cout << "Ejecutando estad" << endl;
+    cout << "////////////////////////////////////////////////////\n"
+         << endl;
     int totalcasos = -1;
     int contagiados = 0;
     int fallecidos = 0;
@@ -225,6 +228,7 @@ void estad(string fileName)
     else
     {
         cout << "Error al abrir el archivo" << endl; // si no entra en el if, devuelve error
+        exit(1);
     }
 }
 
@@ -237,7 +241,7 @@ void estad(string fileName)
 void p_muertes(string prov, string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
-    cout << "Cantidad de muertes por provincia" << endl;
+    cout << "Ejecutando p_muertes" << endl;
     cout << "////////////////////////////////////////////////////\n"
          << endl;
 
@@ -266,6 +270,9 @@ void p_muertes(string prov, string fileName)
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
+
+    if (!fin.fail())
+    {
     vector<string> arr[25];
 
     vector<string> row;
@@ -326,6 +333,11 @@ void p_muertes(string prov, string fileName)
         }
         cout << endl;
     }
+    }
+    else{
+        cout<<"Error al abrir el archivo"<<endl;
+        exit(1);
+    }
 }
 
 /**
@@ -337,7 +349,7 @@ void p_muertes(string prov, string fileName)
 void p_casos(string prov, string fileName)
 {
     cout << "\n\n////////////////////////////////////////////////////" << endl;
-    cout << "Cantidad de casos por provincia" << endl;
+    cout << "Ejecutando p_casos" << endl;
     cout << "////////////////////////////////////////////////////\n"
          << endl;
 
@@ -366,6 +378,9 @@ void p_casos(string prov, string fileName)
     fstream fin;
     fin.open("./" + fileName, ios::in);
 
+    
+    if (!fin.fail())
+    {
     vector<string> arr[25];
 
     vector<string> row;
@@ -422,6 +437,11 @@ void p_casos(string prov, string fileName)
         }
         cout << endl;
     }
+    }
+    else{
+        cout<<"Problemas al abrir el archivo"<<endl;
+        exit(1);
+    }
 }
 
 /**
@@ -431,19 +451,24 @@ void p_casos(string prov, string fileName)
  */
 void casos_edad(string edad_, string fileName)
 {
-    cout << endl
-         << "Ejecutando casos_edad(" << edad_ << ").........." << endl;
+     cout << "\n\n////////////////////////////////////////////////////" << endl;
+    cout << "Ejecutando casos_edad" << endl;
+    cout << "////////////////////////////////////////////////////\n"
+         << endl;
     if (controlNum(edad_))
     { // se controla que lo ingresado sean numeros, para evitar errores
 
         int edad = stoi(edad_); //Se pasa la edad a formato int
 
-        int cont = 0;      //contador
+        int cont = 0;      
         string edadString; //Variable donde se guardaran las edades de los casos, se utiliza para evitar repetir row[2]
         string mesoanio;   // Variable que guarda si es un mes o un anio
         fstream fin;
         fin.open("./" + fileName, ios::in);
 
+        
+    if (!fin.fail())
+    {
         vector<string> row; //Se almacenaran cada columna del archivo por fila en el
         string line, word;
 
@@ -503,6 +528,11 @@ void casos_edad(string edad_, string fileName)
             cout << "Cantidad de casos con " << edad << ": " << cont << endl;
         }
     }
+    else{
+    cout<<"Problemas al abrir el archivo"<<endl;
+    exit(1);
+    }
+    }
     else
     {
         cout << "Edad ingresada no es correcta" << endl;
@@ -518,12 +548,17 @@ void casos_edad(string edad_, string fileName)
  */
 void casos_cui(string fechaString, string fileName)
 {
+       cout << "\n\n////////////////////////////////////////////////////" << endl;
+    cout << "Ejecutando casos_cui" << endl;
+    cout << "////////////////////////////////////////////////////\n"
+         << endl;
     int fechaNum;
 
     if (fileName == "")
     {
         fileName = fechaString;
         fechaNum = stringToint("1");
+        fechaString = "Sin Especificar";
     }
     else
     {
@@ -575,10 +610,17 @@ void casos_cui(string fechaString, string fileName)
 
         arbol.inorder();
 
-        cout << "Cantidad de casos cuidados intensivos despues de la fecha " << fechaString << ": " << cont << endl;
+    if(fechaString=="Sin Especificar"){
+        cout << "Cantidad de casos cuidados intensivos: " << cont << endl;
     }
-    else
+    else{
+cout << "Cantidad de casos cuidados intensivos despues de la fecha " << fechaString << ": " << cont << endl;
+    }
+    }
+    else{
         cout << "Problemas con el archivo" << endl;
+        exit(1);
+    }
 }
 
 /**
@@ -604,7 +646,7 @@ int main(int argc, char **argv)
     clock_t begin;
     begin = clock();
 
-    if (argc == 2)
+    if (argc == 3)
     {
         if (strcmp(argv[1], "-casos_cui") == 0)
         {
@@ -618,14 +660,8 @@ int main(int argc, char **argv)
         {
             p_muertes(argv[2], "");
         }
-        else
-        {
-            Error();
-        }
-    }
-    else if (argc == 3)
-    {
-        if (strcmp(argv[1], "-estad") == 0)
+
+       else if (strcmp(argv[1], "-estad") == 0)
         {
             estad(argv[2]);
         }
