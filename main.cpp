@@ -174,7 +174,7 @@ void estad(string fileName)
             }
             totalcasos++; //aumento constantemente el contador de los casos+
 
-            if (row[2] != "NA" && row[2] != "edad") //si los datosd e la columna dos no son "NA" ni "edad", entra a la funcion
+            if (controlNum(row[2])) //si los datosd e la columna dos no son "NA" ni "edad", entra a la funcion
             {
                 a = stoi(row[2]); //convierto la edad que viene como string, a variable entera int
 
