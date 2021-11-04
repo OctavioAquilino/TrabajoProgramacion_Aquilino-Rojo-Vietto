@@ -91,7 +91,6 @@ bool controlNum(string str)
  */
 void quickSortProvincias(vector<string> arr[], int first, int last)
 {
-
     int i, j, middle;
     vector<string> pivot, aux;
 
@@ -245,22 +244,22 @@ void p_muertes(string prov, string fileName)
     cout << "////////////////////////////////////////////////////\n"
          << endl;
 
-    if (fileName == "")
+    if (fileName == "") //Si se ejecuta la funcion sin enviar parametros
     {
         fileName = prov;
-        prov = "25";
+        prov = "25";  //Se considera 25 por todas las provincias.
     }
 
-    if (!controlNum(prov))
+    if (!controlNum(prov))  //Control de que el parametro sea un numero.
     {
         cout << "Solo se permiten numeros enteros para la funcion\n"
              << endl;
         exit(1);
     }
 
-    int val = stoi(prov);
+    int val = stoi(prov);  //Conversion de string a int.
 
-    if (val > 25 || val <= 0)
+    if (val > 25 || val <= 0) //Si el valor ingresado supera la cantidad de provinicias, se cambia a 25.
     {
         cout << "Solo hay 25 posibles provincias, se cambiará a este valor\n"
              << endl;
@@ -271,22 +270,23 @@ void p_muertes(string prov, string fileName)
     fin.open("./" + fileName, ios::in);
 
 
-    if (!fin.fail())
+    if (!fin.fail())  //Se controla si hay problemas con el archivo
     {
-    vector<string> arr[25];
+
+    vector<string> arr[25]; //Se crea array de 25 posiciones que acepta listas.
 
     vector<string> row;
     string line, word;
 
-    int Cont_Provincias[25], a = 0;
+    int Cont_Provincias[25];
     string Provincias[] = {"SIN ESPECIFICAR", "CABA", "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "La Pampa", "La Rioja", "Mendoza", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán", "Jujuy", "Misiones"};
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)  
     {
-        arr[i].push_back(Provincias[i]);
+        arr[i].push_back(Provincias[i]); //Se cargan los nombres de las provincias a su respectiva lista.
     }
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)  //Se le asigna valor 0 a toda las posiciones del array.
     {
         Cont_Provincias[i] = 0;
     }
@@ -305,31 +305,30 @@ void p_muertes(string prov, string fileName)
             row.push_back(word);
         }
 
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 25; i++)  //For para recorrer las posiciones del array int.
         {
-            if (row[7] == Provincias[i])
+            if (row[7] == Provincias[i]) //Si la provincia de la tabla es igual a la provincia en la posicion del array
             {
-                a++;
-                if (row[14] == "SI")
+                if (row[14] == "SI") //Si fallecio
                 {
-                    Cont_Provincias[i]++;
+                    Cont_Provincias[i]++; //Se suma 1 en la misma posicion del array int
                 }
             }
         }
     }
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++) 
     {
-        arr[i].push_back(to_string(Cont_Provincias[i]));
+        arr[i].push_back(to_string(Cont_Provincias[i])); //Se agrega la cantidad de muertos, convertido a string, de cada provincia a su respectiva lista.
     }
 
-    quickSortProvincias(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24); //Ordenamiento de del array que contiene las listas.
 
     for (int i = 0; i < val; i++)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout << arr[i][j] << "  ";
+            cout << arr[i][j] << "  ";  //Se muestran los datos: provinicia y cantidad de muertos.
         }
         cout << endl;
     }
@@ -353,22 +352,22 @@ void p_casos(string prov, string fileName)
     cout << "////////////////////////////////////////////////////\n"
          << endl;
 
-    if (fileName == "")
+    if (fileName == "") //Si se ejecuta la funcion sin enviar parametros
     {
         fileName = prov;
-        prov = "25";
+        prov = "25"; //Se considera 25 por todas las provincias.
     }
 
-    if (!controlNum(prov))
+    if (!controlNum(prov))  //Control de que el parametro sea un numero.
     {
         cout << "Solo se permiten numeros enteros para la funcion\n"
              << endl;
         exit(1);
     }
 
-    int val = stoi(prov);
+    int val = stoi(prov);  //Conversion de string a int.
 
-    if (val > 25 || val <= 0)
+    if (val > 25 || val <= 0)  //Si el valor ingresado supera la cantidad de provinicias, se cambia a 25.
     {
         cout << "Solo hay 25 posibles provincias, se cambiará a este valor\n"
              << endl;
@@ -379,22 +378,22 @@ void p_casos(string prov, string fileName)
     fin.open("./" + fileName, ios::in);
 
     
-    if (!fin.fail())
+    if (!fin.fail())  //Se controla si hay problemas con el archivo
     {
     vector<string> arr[25];
 
     vector<string> row;
     string line, word;
 
-    int Cont_Provincias[25], a = 0;
+    int Cont_Provincias[25];
     string Provincias[] = {"SIN ESPECIFICAR", "CABA", "Buenos Aires", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "La Pampa", "La Rioja", "Mendoza", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán", "Jujuy", "Misiones"};
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)  
     {
-        arr[i].push_back(Provincias[i]);
+        arr[i].push_back(Provincias[i]); //Se cargan los nombres de las provincias a su respectiva lista.
     }
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++)  //Se le asigna valor 0 a toda las posiciones del array.
     {
         Cont_Provincias[i] = 0;
     }
@@ -412,28 +411,27 @@ void p_casos(string prov, string fileName)
             row.push_back(word);
         }
 
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 25; i++)  //For para recorrer las posiciones del array int.
         {
-            if (row[7] == Provincias[i])
+            if (row[7] == Provincias[i])  //Si la provincia de la tabla es igual a la provincia en la posicion del array
             {
-                Cont_Provincias[i]++;
-                a++;
+                Cont_Provincias[i]++; //Se suma 1 en la misma posicion del array int
             }
         }
     }
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 25; i++) 
     {
-        arr[i].push_back(to_string(Cont_Provincias[i]));
+        arr[i].push_back(to_string(Cont_Provincias[i])); //Se agrega la cantidad de casos, convertido a string, de cada provincia a su repsectiva lista.
     }
 
-    quickSortProvincias(arr, 0, 24);
+    quickSortProvincias(arr, 0, 24); //Ordenamiento de del array que contiene las listas.
 
     for (int i = 0; i < val; i++)
     {
         for (int j = 0; j < 2; j++)
         {
-            cout << arr[i][j] << "  ";
+            cout << arr[i][j] << "  "; //Se muestran los datos: provinicia y cantidad de casos.
         }
         cout << endl;
     }
@@ -562,7 +560,7 @@ void casos_cui(string fechaString, string fileName)
     }
     else
     {
-        fechaNum = stringToint_control(fechaString);//Se realiza la asignacion conun control extra
+        fechaNum = stringToint_control(fechaString);//Se realiza la asignacion con un control extra
     }
 
     fstream fin;
